@@ -12,10 +12,12 @@ Moleculer Sidecar is a Moleculer module to allow using external services (writte
 ```
 
 ## Usage (via HTTP interface)
+The ServiceBroker inside the Sidecar can be configured via `moleculer.config.js` file or environment variables.
 
-### Register an external HTTP service
+### Register an external service
+The request body should contains one or more service schema where the action/event handlers should be an URL what points to the external service HTTP endpoint. In the Service schema you can use all MoleculerJS features (e.g. parameter validation, metrics, tracing, bulkhead, timeout, retries ...etc), they are handled by the Sidecar.
 ```
-POST /services
+POST /registry/services
 ```
 
 **Request body**
@@ -54,7 +56,7 @@ POST /services
 
 Calling `comments.create` service action.
 ```
-POST /call/comments.create
+POST /v1/call/comments.create
 ```
 
 **Request body**
@@ -78,12 +80,47 @@ POST /call/comments.create
 }
 ```
 
+**Response body** 
+```js
+{
+    // Response data
+    response: {
+        id: 1,
+        title: "Lorem ipsum",
+        content: "Lorem ipsum dolor sit amet..."
+    },
+    // Optional: Context meta if you changed the content.
+    meta: {
+        user: {
+            id: 12345
+        }
+    }
+}
+```
+
+**Error response body**
+```js
+{
+    error: {
+        name: "MoleculerClientError",
+        code: 422,
+        type: "VALIDATION_ERROR",
+        message: "Title is required",
+        data: {
+            action: "comments.create",
+            params: {
+                title: null
+            }
+        }
+    }
+}
+
 
 ### Emit an event
 
 Emit a `post.created` event.
 ```
-POST /emit/post.created
+POST /v1/emit/post.created
 ```
 
 In case of broadcast use the following URL:
@@ -221,6 +258,39 @@ If you want to subscribe to Moleculer events, you should start a HTTP server. Cr
         group: "posts"
     }
 }
+```
+
+### Access the Sidecar's broker registry
+
+List of all Moleculer nodes
+```
+GET /v1/registry/nodes
+```
+
+List of all Moleculer services
+```
+GET /v1/registry/services
+```
+
+List of all Moleculer actions
+```
+GET /v1/registry/actions
+```
+
+List of all Moleculer event subscriptions
+```
+GET /v1/registry/events
+```
+
+### Unregister an external service
+You can unregister your service if you call the following endpoint:
+```
+DELETE /v1/registry/services/:service-full-name
+```
+
+**Example**
+```
+DELETE /v1/registry/services/v1.posts
 ```
 
 ## Example external services
