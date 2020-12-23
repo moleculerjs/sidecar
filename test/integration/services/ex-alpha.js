@@ -95,6 +95,7 @@ async function httpHandler(req, res) {
 		}
 
 		case "/userEvents": {
+			sendResponse(res, 200);
 			//console.log("User event received.", body);
 			break;
 		}
