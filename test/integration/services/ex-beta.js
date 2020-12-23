@@ -1,5 +1,5 @@
 const http = require("http");
-const { parseBody, sendResponse } = require("../utils");
+const { POST, parseBody, sendResponse } = require("../utils");
 
 let server, port;
 let callStack = [];
@@ -17,7 +17,9 @@ module.exports = {
 		},
 
 		actions: {
-			echo: "/my-actions/echo"
+			echo: "/my-actions/echo",
+			emitUpdate: "/emit.post.update",
+			broadcastUpdate: "/broadcast.post.update"
 		}
 	}),
 
@@ -51,6 +53,36 @@ async function httpHandler(req, res) {
 					}
 				}
 			});
+			break;
+		}
+
+		case "/emit.post.update": {
+			POST(
+				global.sidecarBaseURL + "/v1/emit/post.updated",
+				{
+					params: {
+						id: 1,
+						title: "First post"
+					}
+				},
+				true
+			);
+			sendResponse(res, 200);
+			break;
+		}
+
+		case "/broadcast.post.update": {
+			POST(
+				global.sidecarBaseURL + "/v1/broadcast/post.updated",
+				{
+					params: {
+						id: 1,
+						title: "First post"
+					}
+				},
+				true
+			);
+			sendResponse(res, 200);
 			break;
 		}
 		default: {

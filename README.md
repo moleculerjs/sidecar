@@ -114,7 +114,7 @@ POST /v1/call/comments.create
         }
     }
 }
-
+```
 
 ### Emit an event
 
@@ -146,7 +146,7 @@ POST /broadcast/post.created
     },
     // Emit options
     options: {
-        group: "users"
+        groups: "users"
     }
 }
 ```
@@ -237,6 +237,8 @@ If you want to subscribe to Moleculer events, you should start a HTTP server. Cr
     // Type of event (emit, broadcast)
     eventType: "emit",
 
+    eventGroups: "posts",
+
     // Caller NodeID
     nodeID: "node-123",
 
@@ -251,11 +253,6 @@ If you want to subscribe to Moleculer events, you should start a HTTP server. Cr
         user: {
             id: 12345
         }
-    },
-
-    // Calling options
-    options: {
-        group: "posts"
     }
 }
 ```

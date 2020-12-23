@@ -196,6 +196,8 @@ module.exports = {
 						meta: ctx.meta
 					};
 				} catch (err) {
+					ctx.meta.$statusCode = err.code || 500;
+
 					return {
 						error: _.pick(err, [
 							"name",
@@ -223,7 +225,15 @@ module.exports = {
 				options: "object|optional"
 			},
 			async handler(ctx) {
-				// TODO
+				const payload = ctx.params;
+				try {
+					await ctx.emit(payload.event, payload.params, {
+						meta: payload.meta,
+						groups: payload.groups
+					});
+				} catch (err) {
+					this.logger.error("Unable to emit event", err);
+				}
 			}
 		},
 
@@ -238,12 +248,26 @@ module.exports = {
 				options: "object|optional"
 			},
 			async handler(ctx) {
-				// TODO
+				const payload = ctx.params;
+				try {
+					await ctx.broadcast(payload.event, payload.params, {
+						meta: payload.meta,
+						groups: payload.groups
+					});
+				} catch (err) {
+					this.logger.error("Unable to broadcast event", err);
+				}
 			}
 		}
 	},
 
 	methods: {
+		/**
+		 * Generate REST handler for action
+		 *
+		 * @param {*} action
+		 * @param {*} schema
+		 */
 		generateActionHandler(action, schema) {
 			//console.log("generateActionHandler", action);
 			const fullUrl =
@@ -270,8 +294,38 @@ module.exports = {
 			};
 		},
 
-		generateEventHandler(event, schema) {},
+		/**
+		 * Generate REST handler for event
+		 * @param {*} event
+		 * @param {*} schema
+		 */
+		generateEventHandler(event, schema) {
+			//console.log("generateActionHandler", action);
+			const fullUrl =
+				(schema.settings && schema.settings.baseUrl ? schema.settings.baseUrl : "") +
+				event.handler;
 
+			return async ctx => {
+				try {
+					await this.postRequest(fullUrl, {
+						event: ctx.eventName,
+						eventType: ctx.eventType,
+						eventGroups: ctx.eventGroups,
+						nodeID: ctx.nodeID,
+						params: ctx.params,
+						meta: ctx.meta
+					});
+				} catch (err) {
+					this.logger.error("Unable to call sidecar event subscription handler", err);
+				}
+			};
+		},
+
+		/**
+		 * POST request for external services.
+		 * @param {String} url
+		 * @param {any?} payload
+		 */
 		postRequest(url, payload) {
 			return fetch(url, {
 				method: "POST",

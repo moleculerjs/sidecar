@@ -30,5 +30,9 @@ module.exports = {
 		}
 	},
 
-	events: {}
+	events: {
+		"post.updated": {
+			handler: jest.fn()
+		}
+	}
 };

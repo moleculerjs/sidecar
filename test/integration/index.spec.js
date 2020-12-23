@@ -9,7 +9,7 @@ process.argv = [
 	"test/integration/moleculer.config.sidecar.js"
 ];
 
-const { ServiceBroker } = require("moleculer");
+const { ServiceBroker, Context } = require("moleculer");
 const GreeterService = require("./services/greeter.service");
 
 const SidecarRunner = require("../../");
@@ -196,6 +196,77 @@ describe("Integration tests", () => {
 				meta: { user: { id: 1, name: "John Doe" }, alpha: "ok", beta: "ok" },
 				options: {}
 			});
+		});
+
+		it("should call the 'greeter.welcome' with params", async () => {
+			const res = await ExAlpha.callGreeterWelcome();
+			expect(res).toEqual({ meta: {}, response: "Welcome, Sidecar" });
+			expect(GreeterService.actions.welcome.handler).toBeCalledTimes(1);
+		});
+	});
+
+	describe("Test external service events", () => {
+		it("should call the event handler in ex-alpha", async () => {
+			ExAlpha.callStack.length = 0;
+
+			await broker.emit("user.created", { user: { id: 5, name: "John Doe" } });
+			await broker.Promise.delay(100);
+
+			expect(ExAlpha.callStack[0]).toEqual({
+				method: "POST",
+				path: "/userEvents",
+				body: {
+					event: "user.created",
+					eventGroups: ["ex-alpha"],
+					eventType: "emit",
+					meta: {},
+					nodeID: broker.nodeID,
+					params: { user: { id: 5, name: "John Doe" } }
+				}
+			});
+		});
+
+		it("should call the event handler in ex-alpha", async () => {
+			await broker.broadcast("user.created", { user: { id: 5, name: "John Doe" } });
+			await broker.Promise.delay(100);
+
+			expect(ExAlpha.callStack[1]).toEqual({
+				method: "POST",
+				path: "/userEvents",
+				body: {
+					event: "user.created",
+					//eventGroups: ["ex-alpha"],
+					eventType: "broadcast",
+					meta: {},
+					nodeID: broker.nodeID,
+					params: { user: { id: 5, name: "John Doe" } }
+				}
+			});
+		});
+
+		it("should receive the greeter service the 'post.updated' event (emit)", async () => {
+			await broker.call("ex-beta.emitUpdate");
+			await broker.Promise.delay(100);
+			expect(GreeterService.events["post.updated"].handler).toBeCalledTimes(1);
+			expect(GreeterService.events["post.updated"].handler).toBeCalledWith(
+				{ id: 1, title: "First post" },
+				"sidecar",
+				"post.updated",
+				expect.any(Context)
+			);
+		});
+
+		it("should receive the greeter service the 'post.updated' event (broadcast)", async () => {
+			GreeterService.events["post.updated"].handler.mockClear();
+			await broker.call("ex-beta.broadcastUpdate");
+			await broker.Promise.delay(100);
+			expect(GreeterService.events["post.updated"].handler).toBeCalledTimes(1);
+			expect(GreeterService.events["post.updated"].handler).toBeCalledWith(
+				{ id: 1, title: "First post" },
+				"sidecar",
+				"post.updated",
+				expect.any(Context)
+			);
 		});
 	});
 });

@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 
 module.exports = {
-	POST: async function (url, payload) {
+	POST: async function (url, payload, noRes) {
 		const res = await fetch(url, {
 			method: "POST",
 			cache: "no-cache",
@@ -14,7 +14,7 @@ module.exports = {
 
 		return {
 			status: res.status,
-			json: await res.json()
+			json: noRes ? null : await res.json()
 		};
 	},
 

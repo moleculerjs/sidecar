@@ -21,8 +21,17 @@ module.exports = {
 			danger: "/danger",
 			silentHazard: "/silentHazard",
 			proxy: "/proxy"
+		},
+
+		events: {
+			"user.**": "/userEvents"
 		}
 	}),
+
+	async callGreeterWelcome() {
+		const res = await callAction("greeter.welcome", { name: "Sidecar" });
+		return res.json;
+	},
 
 	callStack
 };
@@ -39,7 +48,7 @@ async function httpHandler(req, res) {
 	callStack.push({
 		path,
 		method,
-		headers,
+		//headers,
 		body
 	});
 
@@ -82,6 +91,11 @@ async function httpHandler(req, res) {
 				alpha: "ok"
 			});
 			sendResponse(res, response.status, response.json);
+			break;
+		}
+
+		case "/userEvents": {
+			//console.log("User event received.", body);
 			break;
 		}
 
