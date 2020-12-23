@@ -6,4 +6,28 @@
 
 "use strict";
 
-module.exports = {};
+const fetch = require("node-fetch");
+
+module.exports = {
+	name: "$sidecar",
+
+	metadata: {},
+
+	settings: {},
+
+	created() {
+		this.services = new Map();
+	},
+
+	methods: {
+		//
+	},
+
+	started() {
+		//
+	},
+
+	stopped() {
+		//
+	}
+};
