@@ -2,7 +2,7 @@
 
 ![Integration Test](https://github.com/moleculerjs/sidecar/workflows/Integration%20Test/badge.svg)
 
-# Moleculer Sidecar
+# [WIP] Moleculer Sidecar
 Moleculer Sidecar is a Moleculer module to allow using external services (written in other programming languages which is not supported officially) in a Moleculer microservices project. The Sidecar is a HTTP server which gives a REST interface to communicate other Moleculer services instead of implementing the full Moleculer protocol és Service Registry & Discovery features. Sidecar is a full-fledged MoleculerJS node with all features (e.g. parameter validation, retries, fallback, timeout...etc), it means in the external services, you don't need to implement them because Sidecar manage them.
 
 ## Features
@@ -11,13 +11,9 @@ Moleculer Sidecar is a Moleculer module to allow using external services (writte
 ```
 ```
 
-## Usage
+## Usage (via HTTP interface)
 
-### HTTP(s) sidecar interface
-
-#### Register an external HTTP service
-
-**URL**
+### Register an external HTTP service
 ```
 POST /services
 ```
@@ -54,10 +50,9 @@ POST /services
 }
 ```
 
-#### Call a service
+### Call a service
 
 Calling `comments.create` service action.
-**URL**
 ```
 POST /call/comments.create
 ```
@@ -84,10 +79,9 @@ POST /call/comments.create
 ```
 
 
-#### Emit an event
+### Emit an event
 
 Emit a `post.created` event.
-**URL**
 ```
 POST /emit/post.created
 ```
@@ -120,7 +114,7 @@ POST /broadcast/post.created
 }
 ```
 
-#### Accepting action requests
+### Accepting action requests
 If your external service implements actions, you should start a HTTP server. Create an endpoint for the action handler and set the address in the service schema. If another services calls your action, the Sidecar sends a POST request to the defined endpoint with the following request body:
 
 **Request body**
@@ -194,7 +188,7 @@ If an error occured during execution, use correct response status code (4xx, 5xx
 }
 ```
 
-#### Accepting events
+### Accepting events
 If you want to subscribe to Moleculer events, you should start a HTTP server. Create an endpoint for the event handler and set the address in the service schema. If the event emitted, the Sidecar sends a POST request to the defined endpoint with the following request body:
 
 **Request body**
@@ -228,6 +222,32 @@ If you want to subscribe to Moleculer events, you should start a HTTP server. Cr
     }
 }
 ```
+
+## Example external services
+
+### Go
+TODO
+
+### Python
+TODO
+
+### Ruby
+TODO
+
+### Rust
+TODO
+
+### PHP
+TODO
+
+### C#
+TODO
+
+### C++
+TODO
+
+### Delphi
+TODO
 
 ## Contribution
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
