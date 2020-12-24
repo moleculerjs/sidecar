@@ -17,7 +17,7 @@ The ServiceBroker inside the Sidecar can be configured via `moleculer.config.js`
 ### Register an external service
 The request body should contains one or more service schema where the action/event handlers should be an URL what points to the external service HTTP endpoint. In the Service schema you can use all MoleculerJS features (e.g. parameter validation, metrics, tracing, bulkhead, timeout, retries ...etc), they are handled by the Sidecar.
 ```
-POST /registry/services
+POST /v1/registry/services
 ```
 
 **Request body**

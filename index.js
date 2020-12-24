@@ -27,7 +27,7 @@ require("thrift");
 const { Runner } = require("moleculer");
 const path = require("path");
 
-console.log("argv:", process.argv);
+//console.log("argv:", process.argv);
 
 const runner = new Runner();
 module.exports = runner
