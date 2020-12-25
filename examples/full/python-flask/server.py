@@ -7,15 +7,22 @@ app = Flask(__name__)
 
 SIDECAR_ADDRESS = 'http://localhost:5103'
 
+'''
+Generate JSON responsefor actions
+'''
 def generate_json_response(content):
 	return json.dumps({'response': content })
 
-# Simple action handler
+'''
+Simple action handler
+'''
 @app.route("/actions/hello", methods=["POST"])
 def index():
 	return generate_json_response("Hello from Python!"), 200, {'Content-Type':'application/json'}
 
-# Action handler with params
+'''
+Action handler with params
+'''
 @app.route("/actions/welcome", methods=["POST"])
 def welcome():
 	body = request.get_json()
@@ -23,8 +30,9 @@ def welcome():
 	# meta = body.get('meta')
 	return generate_json_response('Hello {} from Python!'.format(params['name'])), 200, {'Content-Type':'application/json'}
 
-
-# Event handler
+'''
+Event handler
+'''
 @app.route("/events/sample.event.happened", methods=["POST"])
 def user():
 	# body = request.get_json()
@@ -32,15 +40,17 @@ def user():
 	# meta = body['meta']
 	print("Sample event happened.")
 
-	callAction("$node.list", params = {})
-
 	return "OK"
 
-# Send a POST request to the Sidecar
+'''
+Send a POST request to the Sidecar
+'''
 def POST(url, content):
 	return requests.post(url = SIDECAR_ADDRESS + url, json = content)
 
-# Register the service to the Sidecar
+'''
+Register the service to the Sidecar
+'''
 def register_service_schema():
 	schema = {
 		'name': "python-demo",
@@ -64,10 +74,13 @@ def register_service_schema():
 	# Register schema
 	rsp = POST('/v1/registry/services', schema)
 
-	print("Response:")
-	print(rsp.text)
+	print("Response: " + rsp.text)
 
-# Call an action
+'''
+Call an action
+Example:
+	callAction("posts.list", params = { 'limit: 5, 'offset: 0 }, meta = { 'from': 'python' })
+'''
 def callAction(action, **kwargs):
 	content = {
 		'params': kwargs.get('params'),
@@ -78,10 +91,11 @@ def callAction(action, **kwargs):
 	print("Calling '{}' action...".format(action))
 	rsp = POST('/v1/call/' + action, content)
 
-	print("Action response:")
-	print(rsp.text)
+	return rsp
 
-# Emit an event
+'''
+Emit an event
+'''
 def emitEvent(event, **kwargs):
 	content = {
 		'params': kwargs.get('params'),
@@ -92,7 +106,28 @@ def emitEvent(event, **kwargs):
 	print("Emitting '{}' event...".format(event))
 	POST('/v1/emit/' + event, content)
 
-print("Registering service to the Sidecar...")
-register_service_schema()
+'''
+Get services list from Sidecar
+'''
+def getServiceList():
+	rsp = callAction("$node.services")
+	json = rsp.json()
+	print("Services:")
 
-emitEvent("python-service.started")
+	for item in json.get("response"):
+		print("  {}".format(item.get("fullName")))
+	print("")
+
+'''
+Start registration
+'''
+def start():
+	print("Registering service to the Sidecar ({})...".format(SIDECAR_ADDRESS))
+	register_service_schema()
+
+	getServiceList()
+
+	emitEvent("python-service.started")
+
+
+start()

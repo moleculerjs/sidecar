@@ -2,10 +2,10 @@
   "name": "moleculer-sidecar",
   "version": "0.0.0",
   "description": "Sidecar module for Moleculer microservices framework with HTTP support.",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": "index.js",
   "scripts": {
-    "dev": "nodemon examples/index.js",
+    "dev": "node examples/index.js full --repl",
     "ci": "jest --watch",
     "test": "jest --runInBand --coverage",
     "deps": "npm-check -u",

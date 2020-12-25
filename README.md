@@ -6,13 +6,18 @@
 Moleculer Sidecar is a Moleculer module to allow using external services (written in other programming languages which is not supported officially) in a Moleculer microservices project. The Sidecar is a HTTP server which gives a REST interface to communicate other Moleculer services instead of implementing the full Moleculer protocol és Service Registry & Discovery features. Sidecar is a full-fledged MoleculerJS node with all features (e.g. parameter validation, retries, fallback, timeout...etc), it means in the external services, you don't need to implement them because Sidecar manage them.
 
 ## Features
+- write services any programming languages (which have http server & client support)
+- bundled to executable, no need to install Node.js environment for running.
+- contains all official transporter, cacher, discoverer, serializer libraries
+- easy to add to any Docker image
+- official Alpine Docker image, use it as a Sidecar pod container in Kubernetes cluster
 
 ## Install
 ```
 ```
 
 ## Usage (via HTTP interface)
-The ServiceBroker inside the Sidecar can be configured via `moleculer.config.js` file or environment variables.
+The ServiceBroker inside the Sidecar can be configured via `moleculer.config.js` file or environment variables. The Sidecar HTTP server is listening on port 5103 (by default). _(Why 5103? To make it easier to remember: SIDE = S->5 I->1 D->0 E->3 = 5103)._ If you don't like it, you can change it with `SIDECAR_PORT` environment variable.
 
 ### Register an external service
 The request body should contains one or more service schema where the action/event handlers should be an URL what points to the external service HTTP endpoint. In the Service schema you can use all MoleculerJS features (e.g. parameter validation, metrics, tracing, bulkhead, timeout, retries ...etc), they are handled by the Sidecar.

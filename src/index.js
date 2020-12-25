@@ -7,6 +7,7 @@
 "use strict";
 
 const _ = require("lodash");
+const kleur = require("kleur");
 const fetch = require("node-fetch");
 const { MoleculerError, MoleculerClientError } = require("moleculer").Errors;
 const ApiGateway = require("moleculer-web");
@@ -14,7 +15,6 @@ const pkg = require("../package.json");
 
 module.exports = {
 	name: "$sidecar",
-	version: 1,
 
 	mixins: [ApiGateway],
 
@@ -30,7 +30,7 @@ module.exports = {
 	},
 
 	settings: {
-		port: process.env.SIDECAR_PORT || 0,
+		port: process.env.SIDECAR_PORT != null ? process.env.SIDECAR_PORT : 5103,
 		path: "/v1",
 
 		routes: [
@@ -50,15 +50,15 @@ module.exports = {
 					"GET /registry/actions": "$node.actions",
 					"GET /registry/events": "$node.events",
 
-					"POST /registry/services": "v1.$sidecar.registerService",
-					"DELETE /registry/services/:serviceName": "v1.$sidecar.unregisterService",
+					"POST /registry/services": "$sidecar.registerService",
+					"DELETE /registry/services/:serviceName": "$sidecar.unregisterService",
 
 					// Calling action
-					"POST /call/:action": "v1.$sidecar.callAction",
+					"POST /call/:action": "$sidecar.callAction",
 
 					// Emitting event
-					"POST /emit/:event": "v1.$sidecar.emitEvent",
-					"POST /broadcast/:event": "v1.$sidecar.broadcastEvent"
+					"POST /emit/:event": "$sidecar.emitEvent",
+					"POST /broadcast/:event": "$sidecar.broadcastEvent"
 				}
 			}
 		]
@@ -95,7 +95,7 @@ module.exports = {
 				}
 
 				// 3. Convert the schema, fulfill the action/event handlers
-				this.logger.info(`Create new '${schema.name}' service...`);
+				this.logger.info(kleur.yellow().bold(`Create new '${schema.name}' service...`));
 
 				if (schema.actions) {
 					Object.entries(schema.actions).forEach(([name, action]) => {
@@ -165,7 +165,7 @@ module.exports = {
 					);
 				}
 
-				this.logger.info(`Destroy '${svc.fullName}' service...`);
+				this.logger.info(kleur.yellow().bold(`Destroy '${svc.fullName}' service...`));
 				await this.broker.destroyService(svc);
 
 				return { status: "OK" };
@@ -185,11 +185,15 @@ module.exports = {
 			async handler(ctx) {
 				const payload = ctx.params;
 				try {
-					const response = await ctx.call(payload.action, payload.params, {
-						meta: payload.meta,
-						timeout: payload.timeout,
-						retries: payload.retries
-					});
+					const response = await ctx.call(
+						payload.action,
+						payload.params != null ? payload.params : {},
+						{
+							meta: payload.meta,
+							timeout: payload.timeout,
+							retries: payload.retries
+						}
+					);
 
 					return {
 						response,
@@ -227,7 +231,7 @@ module.exports = {
 			async handler(ctx) {
 				const payload = ctx.params;
 				try {
-					await ctx.emit(payload.event, payload.params, {
+					await ctx.emit(payload.event, payload.params != null ? payload.params : {}, {
 						meta: payload.meta,
 						groups: payload.groups
 					});
