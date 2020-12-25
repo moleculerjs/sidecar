@@ -1,0 +1,181 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "1423c2bb15dc2f9fe7ba5ac6fbb7e5f6",
+    "packages": [
+        {
+            "name": "laylatichy/nano",
+            "version": "0.0.54",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/x.laylatichy.x/nano.git",
+                "reference": "fd11e71628ef529bdb5f903693fe81da9b08b45e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/x%2Elaylatichy%2Ex%2Fnano/repository/archive.zip?sha=fd11e71628ef529bdb5f903693fe81da9b08b45e",
+                "reference": "fd11e71628ef529bdb5f903693fe81da9b08b45e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "nikic/fast-route": "1.3.0",
+                "php": ">=7.4.0",
+                "workerman/workerman": "4.0.15"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "2.16.7",
+                "phpunit/phpunit": "9.4.2"
+            },
+            "suggest": {
+                "ext-event": "For better performance."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "laylatichy\\nano\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Layla Tichy",
+                    "email": "contact@laylatichy.com",
+                    "homepage": "http://laylatichy.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "blazing fast REST API framework based on workerman and fast-route",
+            "homepage": "https://gitlab.com/x.laylatichy.x/nano",
+            "keywords": [
+                "api",
+                "layla tichy",
+                "nano",
+                "rest",
+                "workerman"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/api/v4/projects/20360747/issues"
+            },
+            "time": "2020-10-29T14:01:19+00:00"
+        },
+        {
+            "name": "nikic/fast-route",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/FastRoute.git",
+                "reference": "181d480e08d9476e61381e04a71b34dc0432e812"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/181d480e08d9476e61381e04a71b34dc0432e812",
+                "reference": "181d480e08d9476e61381e04a71b34dc0432e812",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35|~5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastRoute\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov",
+                    "email": "nikic@php.net"
+                }
+            ],
+            "description": "Fast request router for PHP",
+            "keywords": [
+                "router",
+                "routing"
+            ],
+            "support": {
+                "issues": "https://github.com/nikic/FastRoute/issues",
+                "source": "https://github.com/nikic/FastRoute/tree/master"
+            },
+            "time": "2018-02-13T20:26:39+00:00"
+        },
+        {
+            "name": "workerman/workerman",
+            "version": "v4.0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/Workerman.git",
+                "reference": "580c2476d77a707879332125fa79fedb0ec74e9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/walkor/Workerman/zipball/580c2476d77a707879332125fa79fedb0ec74e9d",
+                "reference": "580c2476d77a707879332125fa79fedb0ec74e9d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "suggest": {
+                "ext-event": "For better performance. "
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "walkor",
+                    "email": "walkor@workerman.net",
+                    "homepage": "http://www.workerman.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An asynchronous event driven PHP framework for easily building fast, scalable network applications.",
+            "homepage": "http://www.workerman.net",
+            "keywords": [
+                "asynchronous",
+                "event-loop"
+            ],
+            "support": {
+                "email": "walkor@workerman.net",
+                "forum": "http://wenda.workerman.net/",
+                "issues": "https://github.com/walkor/workerman/issues",
+                "source": "https://github.com/walkor/workerman",
+                "wiki": "http://doc.workerman.net/"
+            },
+            "time": "2020-10-28T03:37:31+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
