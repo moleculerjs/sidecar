@@ -2,6 +2,8 @@
 
 const { POST, DELETE } = require("./utils");
 
+process.env.SIDECAR_PORT = 0;
+
 process.argv = [
 	process.argv[0],
 	__filename,
@@ -12,7 +14,7 @@ process.argv = [
 const { ServiceBroker, Context } = require("moleculer");
 const GreeterService = require("./services/greeter.service");
 
-const SidecarRunner = require("../../");
+const SidecarRunner = require("../../index");
 
 describe("Integration tests", () => {
 	const broker = new ServiceBroker({ logger: false, transporter: "Fake" });
@@ -40,7 +42,7 @@ describe("Integration tests", () => {
 			const res = await sidecarBroker.call("greeter.hello");
 			expect(res).toBe("Hello Moleculer");
 
-			const sidecarService = sidecarBroker.getLocalService("v1.$sidecar");
+			const sidecarService = sidecarBroker.getLocalService("$sidecar");
 			expect(sidecarService).toBeDefined();
 			sidecarBaseURL = `http://localhost:${sidecarService.listenAddress.port}`;
 			global.sidecarBaseURL = sidecarBaseURL;
@@ -59,7 +61,7 @@ describe("Integration tests", () => {
 				code: 422,
 				data: [
 					{
-						action: "v1.$sidecar.registerService",
+						action: "$sidecar.registerService",
 						field: "name",
 						message: "The 'name' field is required.",
 						nodeID: "sidecar",
