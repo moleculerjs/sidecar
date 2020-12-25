@@ -34,7 +34,7 @@ POST /v1/registry/services
     settings: {
         // It means, your HTTP server running on port 5000 and sidecar can reach it on `localhost`
         // The URLs in action/event handlers contains relative URL.
-        address: "http://localhost:5000"
+        baseUrl: "http://localhost:5000"
     },
 
     actions: {
