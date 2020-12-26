@@ -63,7 +63,7 @@ jobs:
         commit: ${{ github.sha }}
         draft: false
         prerelease: true
-        artifacts: "dist/"
+        artifacts: "dist/*, dist/*.exe"
 
   # publish:
   #   needs: [release]
