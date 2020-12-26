@@ -1,6 +1,6 @@
 # Moleculer Sidecar Example (full)
 
-This example demonstrates the Sidecar functionality. It starts a Sidecar container and additional external service containers:
+This example demonstrates the Moleculer Sidecar polyglot microservices functionality. It starts a Sidecar container and external service containers:
 
 - **Python**: Flask v1.1.2
 - **PHP**: Mark v1.1
