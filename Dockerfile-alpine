@@ -6,7 +6,7 @@ ENV NODE_ENV=production
 
 COPY dist/moleculer-sidecar-alpine ./moleculer-sidecar
 
-RUN apk add --update --no-cache libstdc++
+RUN apk add --no-cache libstdc++
 
 EXPOSE 5103
 

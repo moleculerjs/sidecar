@@ -78,6 +78,9 @@ jobs:
         name: bundles
         path: ./dist
 
+    - name: chmod
+      run: chmod +x dist/*
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
