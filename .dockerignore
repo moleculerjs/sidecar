@@ -1,4 +1,5 @@
-node_modules/
-src/
-test/
-coverage/
+# Ignore everything
+*
+
+# Allow only bundle
+!/dist/moleculer-sidecar-linux
