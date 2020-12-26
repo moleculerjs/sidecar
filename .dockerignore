@@ -3,3 +3,4 @@
 
 # Allow only bundle
 !/dist/moleculer-sidecar-linux
+!/dist/moleculer-sidecar-alpine

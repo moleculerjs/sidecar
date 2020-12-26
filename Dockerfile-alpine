@@ -1,0 +1,13 @@
+FROM alpine
+
+WORKDIR /sidecar
+
+ENV NODE_ENV=production
+
+COPY dist/moleculer-sidecar-alpine ./moleculer-sidecar
+
+RUN apk add --update --no-cache libstdc++
+
+EXPOSE 5103
+
+ENTRYPOINT ["/sidecar/moleculer-sidecar"]
