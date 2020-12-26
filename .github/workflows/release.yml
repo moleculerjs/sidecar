@@ -57,6 +57,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         allowUpdates: true
+        tag: unreleased
         # tag: ${{ steps.split.outputs._2 }}
         name: Unreleased
         commit: ${{ github.sha }}
