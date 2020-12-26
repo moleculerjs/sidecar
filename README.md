@@ -10,7 +10,7 @@ Moleculer Sidecar is a Moleculer module to allow using external services (writte
 - bundled to executable, no need to install Node.js environment for running.
 - contains all official transporter, cacher, discoverer, serializer libraries
 - easy to add to any Docker image
-- official Alpine Docker image, use it as a Sidecar pod container in Kubernetes cluster
+- official Docker image, use it as a Sidecar pod container in Kubernetes cluster
 
 ## Install
 ```
