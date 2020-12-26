@@ -61,6 +61,7 @@ jobs:
         # tag: ${{ steps.split.outputs._2 }}
         name: Unreleased
         commit: ${{ github.sha }}
+        omitBody: true
         draft: false
         prerelease: true
         artifacts: "dist/*, dist/*.exe"

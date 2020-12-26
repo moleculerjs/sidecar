@@ -13,7 +13,21 @@ Moleculer Sidecar is a Moleculer module to allow using external services (writte
 - official Docker image, use it as a Sidecar pod container in Kubernetes cluster
 
 ## Install
+
+### Docker
+**Simple start**
+```bash
+docker run -p 5103:5103 moleculer/sidecar
 ```
+
+**Start with REPL mode**
+```bash
+docker run --it -p 5103:5103 moleculer/sidecar --repl
+```
+
+**Start with config file**
+```bash
+docker run -v /my-folder/moleculer.config.js:/sidecar/moleculer.config.js moleculer/sidecar --config
 ```
 
 ## Usage (via HTTP interface)
