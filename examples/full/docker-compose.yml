@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  sidecar:
+    image: sidecar-demo-main
+    build:
+      context: ../../
+      dockerfile: Dockerfile-alpine
+    environment:
+      SIDECAR_PORT: 5103
+      TRANSPORTER: nats://nats:4222
+    depends_on:
+      - nats
+    networks:
+      - internal
+      - external
+    restart: always
+
+  nats:
+    image: nats
+    ports:
+      - "4222:4222"
+    networks:
+      - external
+    restart: always
+
+  go-demo:
+    image: sidecar-demo-go
+    build:
+      context: ./go-fiber
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
+
+  php-demo:
+    image: sidecar-demo-php
+    build:
+      context: ./php-mark
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
+
+  python-demo:
+    image: sidecar-demo-python
+    build:
+      context: ./python-flask
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
+
+
+
+
+
+networks:
+  internal: {}
+  external: {}

@@ -35,7 +35,7 @@ func registerServiceSchema() {
 	postBody := `{
 		"name": "go-demo",
 		"settings": {
-			"baseUrl": "http://192.168.0.243:5002"
+			"baseUrl": "http://go-demo:5002"
 		},
 		"actions": {
 			"hello": "/actions/hello",
@@ -92,7 +92,7 @@ func main() {
 	})
 
 	app.Post("events/sample.event", func(c *fiber.Ctx) error {
-		fmt.Printf("Sample event happened.")
+		log.Println("Sample event happened.")
 		return c.SendStatus(200)
 	})
 

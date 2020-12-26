@@ -20,7 +20,8 @@ def generate_json_response(content):
 Simple action handler
 '''
 @app.route("/actions/hello", methods=["POST"])
-def index():
+def hello():
+	app.logger.info("Hello action called.")
 	return generate_json_response("Hello from Python!"), 200, {'Content-Type':'application/json'}
 
 '''
@@ -28,6 +29,7 @@ Action handler with params
 '''
 @app.route("/actions/welcome", methods=["POST"])
 def welcome():
+	app.logger.info("Welcome action called.")
 	body = request.get_json()
 	params = body.get('params')
 	# meta = body.get('meta')
@@ -37,11 +39,11 @@ def welcome():
 Event handler
 '''
 @app.route("/events/sample.event", methods=["POST"])
-def user():
+def sampleEvent():
 	# body = request.get_json()
 	# params = body['params']
 	# meta = body['meta']
-	print("Sample event happened.")
+	app.logger.info("Sample event happened.")
 
 	return "OK"
 
@@ -58,7 +60,7 @@ def register_service_schema():
 	schema = {
 		'name': "python-demo",
 		'settings': {
-			'baseUrl': 'http://localhost:5000'
+			'baseUrl': 'http://python-demo:5000'
 		},
 		'actions': {
 			'hello': '/actions/hello',
@@ -133,4 +135,8 @@ def start():
 	emitEvent("python-service.started")
 
 
+
 start()
+
+if __name__ == "__main__":
+	app.run(host='0.0.0.0', port= 5000, debug=True)

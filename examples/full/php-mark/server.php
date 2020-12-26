@@ -56,7 +56,11 @@ function httpPost($url, $data)
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
-    curl_close($curl);
+	curl_close($curl);
+	if ($response == false) {
+		echo "Sidecar is not available. Exiting...\n";
+		exit(1);
+	}
     return $response;
 }
 
@@ -67,7 +71,7 @@ function registerServiceSchema() {
 	$regRes = httpPost($SIDECAR_ADDRESS . '/v1/registry/services', '{
 		"name": "php-demo",
 		"settings": {
-			"baseUrl": "http://192.168.0.243:5001"
+			"baseUrl": "http://php-demo:5001"
 		},
 		"actions": {
 			"hello": "/actions/hello",

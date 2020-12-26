@@ -12,4 +12,4 @@ COPY . .
 ENV FLASK_APP=server.py
 EXPOSE 5000
 
-CMD ["flask", "run"]
+CMD ["python", "server.py"]
