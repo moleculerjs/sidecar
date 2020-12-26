@@ -3,14 +3,15 @@
 ![Integration Test](https://github.com/moleculerjs/sidecar/workflows/Integration%20Test/badge.svg)
 
 # [WIP] Moleculer Sidecar
-Moleculer Sidecar is a Moleculer module to allow using external services (written in other programming languages which is not supported officially) in a Moleculer microservices project. The Sidecar is a HTTP server which gives a REST interface to communicate other Moleculer services instead of implementing the full Moleculer protocol és Service Registry & Discovery features. Sidecar is a full-fledged MoleculerJS node with all features (e.g. parameter validation, retries, fallback, timeout...etc), it means in the external services, you don't need to implement them because Sidecar manage them.
+Moleculer Sidecar allows using external services (written in other programming languages which is not supported officially) in a Moleculer microservices project. The Sidecar is a HTTP server which gives a REST interface to communicate other Moleculer services instead of implementing the full Moleculer protocol és Service Registry & Discovery features. Sidecar is a full-fledged MoleculerJS node with all features (e.g. parameter validation, retries, fallback, timeout...etc), it means in the external services, you don't need to implement them because Sidecar manages them.
 
 ## Features
-- write services any programming languages (which have http server & client support)
+- write services any programming languages (which have http server & client support).
 - bundled to executable, no need to install Node.js environment for running.
-- contains all official transporter, cacher, discoverer, serializer libraries
-- easy to add to any Docker image
-- official Docker image, use it as a Sidecar pod container in Kubernetes cluster
+- configure Sidecar via environment variables or `moleculer.config.js` file.
+- contains all official transporter, cacher, discoverer, serializer libraries.
+- easy to add to any Docker image.
+- official Docker image, use it as a Sidecar pod container in Kubernetes cluster.
 
 ## Install
 

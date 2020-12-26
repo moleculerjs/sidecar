@@ -4,66 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1423c2bb15dc2f9fe7ba5ac6fbb7e5f6",
+    "content-hash": "edf5a55fa4704f2361d0eb2b9be0aa05",
     "packages": [
         {
-            "name": "laylatichy/nano",
-            "version": "0.0.54",
+            "name": "mark-php/mark",
+            "version": "v1.1.10",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.com/x.laylatichy.x/nano.git",
-                "reference": "fd11e71628ef529bdb5f903693fe81da9b08b45e"
+                "url": "https://github.com/passwalls/mark.git",
+                "reference": "1f0ed9327809976e8e012d51d5fa72b309910681"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/x%2Elaylatichy%2Ex%2Fnano/repository/archive.zip?sha=fd11e71628ef529bdb5f903693fe81da9b08b45e",
-                "reference": "fd11e71628ef529bdb5f903693fe81da9b08b45e",
+                "url": "https://api.github.com/repos/passwalls/mark/zipball/1f0ed9327809976e8e012d51d5fa72b309910681",
+                "reference": "1f0ed9327809976e8e012d51d5fa72b309910681",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "nikic/fast-route": "1.3.0",
-                "php": ">=7.4.0",
-                "workerman/workerman": "4.0.15"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "2.16.7",
-                "phpunit/phpunit": "9.4.2"
+                "nikic/fast-route": "^1.3",
+                "php": ">=7.1",
+                "workerman/workerman": "^4.0.4"
             },
             "suggest": {
-                "ext-event": "For better performance."
+                "ext-event": "For better performance. "
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "laylatichy\\nano\\": "src/"
+                    "Mark\\": "./src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Layla Tichy",
-                    "email": "contact@laylatichy.com",
-                    "homepage": "http://laylatichy.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "blazing fast REST API framework based on workerman and fast-route",
-            "homepage": "https://gitlab.com/x.laylatichy.x/nano",
-            "keywords": [
-                "api",
-                "layla tichy",
-                "nano",
-                "rest",
-                "workerman"
-            ],
+            "description": "a PHP micro framework based on workerman",
             "support": {
-                "issues": "https://gitlab.com/api/v4/projects/20360747/issues"
+                "issues": "https://github.com/passwalls/mark/issues",
+                "source": "https://github.com/passwalls/mark/tree/v1.1.10"
             },
-            "time": "2020-10-29T14:01:19+00:00"
+            "time": "2020-12-14T02:42:11+00:00"
         },
         {
             "name": "nikic/fast-route",

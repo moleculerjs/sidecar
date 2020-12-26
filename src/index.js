@@ -351,7 +351,7 @@ module.exports = {
 						err = new MoleculerError(res.statusText);
 						Object.assign(err, payload.error);
 					} else {
-						err = new MoleculerError("Something happened", res.status);
+						err = new MoleculerError("Something happened", res.status, res.statusText);
 					}
 
 					throw err;
