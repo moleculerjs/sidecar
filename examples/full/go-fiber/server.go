@@ -8,10 +8,10 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
+	//"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-var SIDECAR_ADDRESS = "http://localhost:5103"
+const sidecarAddress = "http://localhost:5103"
 
 func sendResponse(c *fiber.Ctx, content string) error {
 	return c.JSON(&fiber.Map{
@@ -19,15 +19,15 @@ func sendResponse(c *fiber.Ctx, content string) error {
 	})
 }
 
-type RequestParam struct {
+type requestParam struct {
 	Name string `json:"name"`
 }
 
-type RequestBody struct {
-	Params RequestParam `json:"params"`
+type requestBody struct {
+	Params requestParam `json:"params"`
 }
 
-func RegisterServiceSchema() {
+func registerServiceSchema() {
 	fmt.Println("Registering service schema...")
 	postBody := `{
 		"name": "go-demo",
@@ -48,7 +48,7 @@ func RegisterServiceSchema() {
 		}
 	}`
 
-	resp, err := http.Post(SIDECAR_ADDRESS+"/v1/registry/services", "application/json", bytes.NewBufferString(postBody))
+	resp, err := http.Post(sidecarAddress+"/v1/registry/services", "application/json", bytes.NewBufferString(postBody))
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -67,7 +67,7 @@ func RegisterServiceSchema() {
 func main() {
 	app := fiber.New()
 
-	app.Use(cors.New())
+	//app.Use(cors.New())
 
 	app.Use(func(c *fiber.Ctx) error {
 		c.Accepts("application/json")
@@ -79,7 +79,7 @@ func main() {
 	})
 
 	app.Post("/actions/welcome", func(c *fiber.Ctx) error {
-		body := new(RequestBody)
+		body := new(requestBody)
 		c.BodyParser(body)
 		return sendResponse(c, "Hello "+body.Params.Name+" from Go!")
 	})
@@ -89,7 +89,7 @@ func main() {
 		return c.SendStatus(200)
 	})
 
-	RegisterServiceSchema()
+	registerServiceSchema()
 
 	log.Fatal(app.Listen("0.0.0.0:5002"))
 }
