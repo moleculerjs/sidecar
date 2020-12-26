@@ -35,6 +35,13 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+
+    - name: Fetch artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: bundles
+        path: ./dist
     # - name: Get short tag name
     #   uses: jungwinter/split@v1
     #   id: split
@@ -47,6 +54,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         allowUpdates: true
+        tag: master
         # tag: ${{ steps.split.outputs._2 }}
         name: Unreleased
         commit: ${{ github.sha }}
