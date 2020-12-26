@@ -81,7 +81,7 @@ async function httpHandler(req, res) {
 		}
 
 		case "/silentHazard": {
-			sendResponse(res, 521);
+			sendResponse(res, 501);
 			break;
 		}
 

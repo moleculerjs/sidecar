@@ -138,8 +138,8 @@ describe("Integration tests", () => {
 				expect(err).toBeInstanceOf(Error);
 				expect(err.name).toBe("MoleculerError");
 				expect(err.message).toBe("Something happened");
-				expect(err.code).toBe(521);
-				expect(err.type).toBe("unknown");
+				expect(err.code).toBe(501);
+				expect(err.type).toBe("Not Implemented");
 				expect(err.stack).toBeDefined();
 				expect(err.data).toBeUndefined();
 			}
