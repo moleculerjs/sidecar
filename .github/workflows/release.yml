@@ -24,6 +24,9 @@ jobs:
     - name: "Build bundle with pkg"
       run: npm run build
 
+    - name: List bundles
+      run: ls -al dist
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -54,13 +57,12 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         allowUpdates: true
-        tag: master
         # tag: ${{ steps.split.outputs._2 }}
         name: Unreleased
         commit: ${{ github.sha }}
         draft: false
         prerelease: true
-        artifacts: "dist/*.*"
+        artifacts: "dist/"
 
   # publish:
   #   needs: [release]
