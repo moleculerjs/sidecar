@@ -40,7 +40,7 @@ $api->post(
 
 // Event handler
 $api->post(
-    '/events/sample.event.happened',
+    '/events/sample.event',
     function ($request) {
 		echo("Sample event happened.\n");
 		return new Response(200, [], "");
@@ -79,7 +79,7 @@ function registerServiceSchema() {
 			}
 		},
 		"events": {
-			"sample.event.happened": "/events/sample.event.happened"
+			"sample.event": "/events/sample.event"
 		}
 	}');
 	echo("Response: " . $regRes . "\n");

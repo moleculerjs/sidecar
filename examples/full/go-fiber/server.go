@@ -47,7 +47,7 @@ func registerServiceSchema() {
 			}
 		},
 		"events": {
-			"sample.event.happened": "/events/sample.event.happened"
+			"sample.event": "/events/sample.event"
 		}
 	}`
 
@@ -91,7 +91,7 @@ func main() {
 		return sendResponse(c, "Hello "+body.Params.Name+" from Go!")
 	})
 
-	app.Post("events/sample.event.happened", func(c *fiber.Ctx) error {
+	app.Post("events/sample.event", func(c *fiber.Ctx) error {
 		fmt.Printf("Sample event happened.")
 		return c.SendStatus(200)
 	})

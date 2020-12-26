@@ -36,7 +36,7 @@ def welcome():
 '''
 Event handler
 '''
-@app.route("/events/sample.event.happened", methods=["POST"])
+@app.route("/events/sample.event", methods=["POST"])
 def user():
 	# body = request.get_json()
 	# params = body['params']
@@ -70,7 +70,7 @@ def register_service_schema():
 			}
 		},
 		'events': {
-			'sample.event.happened': '/events/sample.event.happened'
+			'sample.event': '/events/sample.event'
 		}
 	}
 
