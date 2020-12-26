@@ -1,11 +1,14 @@
 from flask import Flask
 from flask import request
 import json
+import os
 import requests
 
 app = Flask(__name__)
 
-SIDECAR_ADDRESS = 'http://localhost:5103'
+SIDECAR_ADDRESS = os.getenv('SIDECAR_ADDRESS')
+if SIDECAR_ADDRESS is None:
+	SIDECAR_ADDRESS = 'http://localhost:5103'
 
 '''
 Generate JSON responsefor actions

@@ -6,12 +6,13 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	//"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-const sidecarAddress = "http://localhost:5103"
+var sidecarAddress string = os.Getenv("SIDECAR_ADDRESS")
 
 func sendResponse(c *fiber.Ctx, content string) error {
 	return c.JSON(&fiber.Map{
@@ -28,11 +29,13 @@ type requestBody struct {
 }
 
 func registerServiceSchema() {
-	fmt.Println("Registering service schema...")
+	// var localAddress string = "http://localhost:5002"
+
+	fmt.Printf("Registering service schema (%s)...\n", sidecarAddress)
 	postBody := `{
 		"name": "go-demo",
 		"settings": {
-			"baseUrl": "http://localhost:5002"
+			"baseUrl": "http://192.168.0.243:5002"
 		},
 		"actions": {
 			"hello": "/actions/hello",
@@ -65,6 +68,10 @@ func registerServiceSchema() {
 }
 
 func main() {
+	if sidecarAddress == "" {
+		sidecarAddress = "http://localhost:5103"
+	}
+
 	app := fiber.New()
 
 	//app.Use(cors.New())

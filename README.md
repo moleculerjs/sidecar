@@ -14,6 +14,9 @@ Moleculer Sidecar is a Moleculer module to allow using external services (writte
 
 ## Install
 
+### Using executables
+Download binaries from [releases](https://github.com/moleculerjs/sidecar/releases).
+
 ### Docker
 **Simple start**
 ```bash
@@ -29,6 +32,12 @@ docker run --it -p 5103:5103 moleculer/sidecar --repl
 ```bash
 docker run -v /my-folder/moleculer.config.js:/sidecar/moleculer.config.js moleculer/sidecar --config
 ```
+
+### Kubernetes
+TODO
+
+### Using from source
+TODO
 
 ## Usage (via HTTP interface)
 The ServiceBroker inside the Sidecar can be configured via `moleculer.config.js` file or environment variables. The Sidecar HTTP server is listening on port 5103 (by default). _(Why 5103? To make it easier to remember: SIDE = S->5 I->1 D->0 E->3 = 5103)._ If you don't like it, you can change it with `SIDECAR_PORT` environment variable.
