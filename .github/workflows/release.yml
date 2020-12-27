@@ -72,7 +72,7 @@ jobs:
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
-          console.log('environment', process.versions, env);
+          console.log('environment', process.versions, process.env);
 
           const fs = require('fs').promises;
 
