@@ -79,7 +79,7 @@ jobs:
 
           //console.log("context:", context);
           const { repo: { owner, repo }, sha } = context;
-          const release_id = 35727994, // "Unreleased"
+          const release_id = 35727994; // "Unreleased"
 
           /*
           //console.log({ owner, repo, sha });
