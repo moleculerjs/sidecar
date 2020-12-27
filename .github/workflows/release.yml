@@ -72,13 +72,13 @@ jobs:
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
-          console.log('environment', process.versions, process.env);
+          //console.log('environment', process.versions, process.env);
 
           const fs = require('fs').promises;
 
-          console.log("context:", context);
+          //console.log("context:", context);
           const { repo: { owner, repo }, sha } = context;
-          console.log({ owner, repo, sha });
+          //console.log({ owner, repo, sha });
 
           /*const release = await github.repos.createRelease({
             owner, repo,
@@ -86,6 +86,8 @@ jobs:
             draft: true,
             target_commitish: sha
           });*/
+
+          // if (process.env.GITHUB_REF == "refs/heads/master") Use "Unreleased", else create new release
 
           //console.log('created release', { release });
 
@@ -99,7 +101,7 @@ jobs:
               //release_id: release.data.id,
               release_id: 35727994, // "Unreleased"
               name: file,
-              data: await fs.readFile(`./${file}`)
+              data: await fs.readFile(`./dist/${file}`)
             });
           }
 
