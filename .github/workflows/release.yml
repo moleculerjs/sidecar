@@ -76,7 +76,7 @@ jobs:
 
           const fs = require('fs').promises;
 
-          console.log("context:", context");
+          console.log("context:", context);
           const { repo: { owner, repo }, sha } = context;
           console.log({ owner, repo, sha });
 
