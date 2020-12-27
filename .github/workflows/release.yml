@@ -72,37 +72,67 @@ jobs:
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
+          // Example codes: https://github.com/ncipollo/release-action/blob/main/src/Releases.ts
           //console.log('environment', process.versions, process.env);
 
           const fs = require('fs').promises;
 
           //console.log("context:", context);
           const { repo: { owner, repo }, sha } = context;
-          //console.log({ owner, repo, sha });
+          const release_id = 35727994, // "Unreleased"
 
-          /*const release = await github.repos.createRelease({
+          /*
+          //console.log({ owner, repo, sha });
+          const release = await github.repos.createRelease({
             owner, repo,
             tag_name: process.env.GITHUB_REF,
             draft: true,
             target_commitish: sha
-          });*/
+          });
 
           // if (process.env.GITHUB_REF == "refs/heads/master") Use "Unreleased", else create new release
 
           //console.log('created release', { release });
+          */
+
+          // https://api.github.com/repos/moleculerjs/sidecar/releases/35727994/assets
+          const listExistingArtifacts = (await github.repos.listReleaseAssets({
+            owner,
+            repo,
+            release_id,
+          })).data;
 
           for (let file of await fs.readdir('./dist')) {
             if ([".", ".."].includes(file)) continue;
 
-            console.log('Uploading', file, "...");
+            const found = listExistingArtifacts.find(item => item.name == file);
+            if (found) {
+              console.log('Deleting previous', file, "...");
+              await github.repos.deleteReleaseAsset({
+                asset_id: found.id,
+                owner,
+                repo
+              });
+            }
 
-            await github.repos.uploadReleaseAsset({
-              owner, repo,
-              //release_id: release.data.id,
-              release_id: 35727994, // "Unreleased"
-              name: file,
-              data: await fs.readFile(`./dist/${file}`)
-            });
+            console.log(`Uploading '${file}'...`);
+            let retry = 3;
+            while (retry++ > 0) {
+              try {
+                await github.repos.uploadReleaseAsset({
+                  owner, repo,
+                  release_id,
+                  name: file,
+                  data: await fs.readFile(`./dist/${file}`)
+                });
+                console.log(`Uploaded '${file}'.`);
+                break;
+              }catch(err) {
+                if (error.status >= 500 && retry > 0) {
+                  console.log(`Failed to upload artifact '${file}'. Retrying...`);
+                }
+              }
+            }
           }
 
           console.log("Done.");
