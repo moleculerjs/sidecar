@@ -51,20 +51,59 @@ jobs:
     #   with:
     #     msg: ${{ github.ref }}
     #     seperator: /
-    - name: Create Release
-      id: create_release
-      uses: ncipollo/release-action@v1
+
+    #- name: Create Release
+    #  id: create_release
+    #  uses: ncipollo/release-action@v1
+    #  with:
+    #    token: ${{ secrets.GITHUB_TOKEN }}
+    #    allowUpdates: true
+    #    tag: unreleased
+    #    # tag: ${{ steps.split.outputs._2 }}
+    #    name: Unreleased
+    #    commit: ${{ github.sha }}
+    #    omitBody: true
+    #    draft: false
+    #    prerelease: true
+    #    artifacts: "dist/*, dist/*.exe"
+
+    - name: Upload Release Assets
+      uses: actions/github-script@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        allowUpdates: true
-        tag: unreleased
-        # tag: ${{ steps.split.outputs._2 }}
-        name: Unreleased
-        commit: ${{ github.sha }}
-        omitBody: true
-        draft: false
-        prerelease: true
-        artifacts: "dist/*, dist/*.exe"
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          console.log('environment', process.versions, env);
+
+          const fs = require('fs').promises;
+
+          console.log("context:", context");
+          const { repo: { owner, repo }, sha } = context;
+          console.log({ owner, repo, sha });
+
+          /*const release = await github.repos.createRelease({
+            owner, repo,
+            tag_name: process.env.GITHUB_REF,
+            draft: true,
+            target_commitish: sha
+          });*/
+
+          //console.log('created release', { release });
+
+          for (let file of await fs.readdir('./dist')) {
+            if ([".", ".."].includes(file)) continue;
+
+            console.log('Uploading', file, "...");
+
+            await github.repos.uploadReleaseAsset({
+              owner, repo,
+              //release_id: release.data.id,
+              release_id: 35727994, // "Unreleased"
+              name: file,
+              data: await fs.readFile(`./${file}`)
+            });
+          }
+
+          console.log("Done.");
 
   docker:
     name: Build & Publish Docker image
