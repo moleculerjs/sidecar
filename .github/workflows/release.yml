@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    name: Build binaries
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -36,6 +37,7 @@ jobs:
   release:
     name: Create Github Release
     needs: [build]
+    # if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
