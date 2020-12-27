@@ -60,6 +60,17 @@ services:
       - internal
     restart: always
 
+  rust-demo:
+    image: sidecar-demo-rust
+    build:
+      context: ./rust-actix
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
 
 
 

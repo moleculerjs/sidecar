@@ -1,26 +1,23 @@
 FROM rust:1.48 AS build
 
-RUN apt-get update && apt-get -y install musl-tools --no-install-recommends \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-RUN rustup target add x86_64-unknown-linux-musl
-
-RUN USER=root cargo new --bin app
 WORKDIR /app
 
+COPY dummy.rs .
 COPY ./Cargo.* ./
+RUN sed -i 's#src/main.rs#dummy.rs#' Cargo.toml && \
+	cat ./Cargo.toml && \
+	cargo build --release && \
+	sed -i 's#dummy.rs#src/main.rs#' Cargo.toml
+
+COPY . .
+
 RUN cargo build --release
-RUN rm src/*.rs
 
-COPY . ./
 
-RUN cargo build --target x86_64-unknown-linux-musl --release
+FROM rust:1.48
+WORKDIR /app
+COPY --from=build /app/target/release/rust-actix /app/rust-actix
 
-# hadolint ignore=DL3006
-FROM alpine
-
-COPY --from=build /app/target/x86_64-unknown-linux-musl/release/rust-actix /app/rust-actix
 EXPOSE 5004
 
 CMD ["/app/rust-actix"]

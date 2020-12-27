@@ -1,14 +1,8 @@
 use actix_web::{post, web, App, HttpResponse, HttpServer, Responder};
 use serde::{Deserialize, Serialize};
-
-// use error_chain::error_chain;
-
-// error_chain! {
-//     foreign_links {
-//         Io(std::io::Error);
-//         HttpRequest(reqwest::Error);
-//     }
-// }
+use serde_json;
+use std::env;
+use url::Url;
 
 #[derive(Deserialize)]
 struct ActionParams {
@@ -51,15 +45,45 @@ async fn sample_event() -> impl Responder {
 }
 
 #[actix_web::main]
-async fn main() -> std::io::Result<()> {
+async fn main() -> Result<(), std::io::Error> {
 
-    // let res = reqwest::get("http://httpbin.org/get").await?;
-    // println!("Status: {}", res.status());
-    // println!("Headers:\n{:#?}", res.headers());
+	let mut sidecar_address = "http://localhost:5103".to_string();
+	if env::var("SIDECAR_ADDRESS").is_ok() {
+		sidecar_address = env::var("SIDECAR_ADDRESS").unwrap();
+	}
 
-    // let body = res.text().await?;
-    // println!("Body:\n{}", body);
+	println!("Registering service schema {}...\n", sidecar_address);
 
+	let url = Url::parse(format!("{}/v1/registry/services", sidecar_address).as_str()).expect("Invalid Sidecar URL");
+
+	let echo_json: serde_json::Value = reqwest::Client::new()
+		.post(url)
+		.json(&serde_json::json!({
+			"name": "rust-demo",
+			"settings": {
+				"baseUrl": "http://rust-demo:5004"
+			},
+			"actions": {
+				"hello": "/actions/hello",
+				"welcome": {
+					"params": {
+						"name": "string|no-empty|trim"
+					},
+					"handler": "/actions/welcome"
+				}
+			},
+			"events": {
+				"sample.event": "/events/sample.event"
+			}
+		}))
+		.send()
+		.await.expect("Some error happened")
+		.json()
+		.await.expect("Some error happened");
+
+	println!("Response: {:#?}", echo_json);
+
+	println!("Starting server on '0.0.0.0:5004'...");
     HttpServer::new(|| {
         App::new()
 			.service(hello)
