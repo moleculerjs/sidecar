@@ -7,7 +7,7 @@ This example demonstrates the Moleculer Sidecar polyglot microservices functiona
 - **Go**: Fiber v2.3.0
 - **Rust**: Actix v3
 
->I'm not familiar with these languages & frameworks, I've just tried to copy-paste the examples from the internet :) If you have knowledge about them and you can improve them, please send a PR.
+>I'm not familiar with these languages & frameworks, I've just copy-pasted the examples from the Internet :) If you have knowledge and you can improve them, please send a PR.
 
 ## Start
 
