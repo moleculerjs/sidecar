@@ -5,6 +5,9 @@ This example demonstrates the Moleculer Sidecar polyglot microservices functiona
 - **Python**: Flask v1.1.2
 - **PHP**: Mark v1.1
 - **Go**: Fiber v2.3.0
+- **Rust**: Actix v3
+
+>I'm not familiar with these languages & frameworks, I've just tried to copy-paste the examples from the internet :) If you have knowledge about them and you can improve them, please send a PR.
 
 ## Start
 
@@ -26,6 +29,9 @@ mol $ actions -i
 ╟─────────────────────┼───────┼──────────┼────────┼────────╢
 ║ python-demo.hello   │     1 │    OK    │   No   │        ║
 ║ python-demo.welcome │     1 │    OK    │   No   │ name   ║
+╟─────────────────────┼───────┼──────────┼────────┼────────╢
+║ rust-demo.hello     │     1 │    OK    │   No   │        ║
+║ rust-demo.welcome   │     1 │    OK    │   No   │ name   ║
 ╚═════════════════════╧═══════╧══════════╧════════╧════════╝
 ```
 
