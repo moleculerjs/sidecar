@@ -24,6 +24,18 @@ services:
       - external
     restart: always
 
+  deno-demo:
+    image: sidecar-demo-deno
+    build:
+      context: ./deno-oak
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
+
   go-demo:
     image: sidecar-demo-go
     build:
