@@ -60,6 +60,18 @@ services:
       - internal
     restart: always
 
+  ruby-demo:
+    image: sidecar-demo-ruby
+    build:
+      context: ./ruby-sinatra
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
+
   rust-demo:
     image: sidecar-demo-rust
     build:
@@ -71,8 +83,6 @@ services:
     networks:
       - internal
     restart: always
-
-
 
 
 networks:
