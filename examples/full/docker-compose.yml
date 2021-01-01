@@ -96,6 +96,17 @@ services:
       - internal
     restart: always
 
+  swift-demo:
+    image: sidecar-demo-swift
+    build:
+      context: ./swift-perfect
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
 
 networks:
   internal: {}
