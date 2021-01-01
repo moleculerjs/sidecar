@@ -1,38 +1,46 @@
-module main
-
-//import os
 import net.http
-import json
+import os
+import vweb
+//import json
 
-const (
-	stories_url = 'https://hacker-news.firebaseio.com/v0/topstories.json'
-	item_url_base = 'https://hacker-news.firebaseio.com/v0/item'
-)
-
-struct Story {
-    title string
+struct App {
+	vweb.Context
+mut:
+	cnt int
 }
 
-fn main() {
-    mut resp := http.get(stories_url)?
-    ids := json.decode([]int, resp.text)?
-    mut cursor := 0
-    for _ in 0..8 {
-        go fn() {
-            for {
-				mut id := 0
-                lock {
-                    if cursor >= ids.len {
-                        break
-                    }
-                    id = ids[cursor]
-                    cursor++
-                }
-                resp = http.get('$item_url_base/$id.json')?
-                story := json.decode(Story, resp.text)?
-                println(story.title)
-            }
-        }()
-    }
-    runtime.wait()
+fn register_service_schema()? {
+	mut sidecar_address := os.getenv('SIDECAR_ADDRESS')
+	if sidecar_address == "" {
+		sidecar_address = 'http://localhost:5103'
+	}
+
+	println('Registering service schema ($sidecar_address)')
+	url := "http://localhost:5103/v1/registry/services"
+	data := '{
+		"name": "v-demo",
+		"settings": {
+			"baseUrl": "http://v-demo:5005"
+		},
+		"actions": {
+			"hello": "/actions/hello",
+			"welcome": {
+				"params": {
+					"name": "string|no-empty|trim"
+				},
+				"handler": "/actions/welcome"
+			}
+		},
+		"events": {
+			"sample.event": "/events/sample.event"
+		}
+	}'
+	resp := http.post_json(url, data)?
+	println('Response' + resp.text)
 }
+
+
+register_service_schema()
+
+println("Listening on port 5005...")
+vweb.run<App>(5005)
