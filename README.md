@@ -325,25 +325,25 @@ DELETE /v1/registry/services/v1.posts
 Using Fiber: [examples/full/go-fiber/server.go](examples/full/go-fiber/server.go)
 
 ### Python
-Using Flask: [examples/full/python-flask/server.go](examples/full/python-flask/server.go)
+Using Flask: [examples/full/python-flask/server.py](examples/full/python-flask/server.py)
 
 ### Ruby
-Using Sinatra: [examples/full/ruby-sinatra/server.go](examples/full/ruby-sinatra/server.go)
+Using Sinatra: [examples/full/ruby-sinatra/server.rb](examples/full/ruby-sinatra/server.rb)
 
 ### Rust
-Using Actix: [examples/full/rust-actix/server.go](examples/full/rust-actix/server.go)
+Using Actix: [examples/full/rust-actix/src/main.rs](examples/full/rust-actix/src/main.rs)
 
 ### PHP
-Using Mark: [examples/full/php-mark/server.go](examples/full/php-mark/server.go)
+Using Mark: [examples/full/php-mark/server.php](examples/full/php-mark/server.php)
 
-### Balerina
-Using built-in tools [examples/full/balerina/server.go](examples/full/balerina/server.go)
+### Ballerina
+Using built-in tools [examples/full/ballerina/src/server/main.bal](examples/full/ballerina/src/server/main.bal)
 
 ### Deno
-Using Oak: [examples/full/deno-oak/server.go](examples/full/deno-oak/server.go)
+Using Oak: [examples/full/deno-oak/server.ts](examples/full/deno-oak/server.ts)
 
 ### Swift
-Using Perfect: [examples/full/swift-perfect/server.go](examples/full/swift-perfect/server.go)
+Using Perfect: [examples/full/swift-perfect/Sources/server/main.swift](examples/full/swift-perfect/Sources/server/main.swift)
 
 ### C#
 TODO
