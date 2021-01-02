@@ -322,24 +322,36 @@ DELETE /v1/registry/services/v1.posts
 ## Example external services
 
 ### Go
-TODO
+Using Fiber: [examples/full/go-fiber/server.go](examples/full/go-fiber/server.go)
 
 ### Python
-TODO
+Using Flask: [examples/full/python-flask/server.go](examples/full/python-flask/server.go)
 
 ### Ruby
-TODO
+Using Sinatra: [examples/full/ruby-sinatra/server.go](examples/full/ruby-sinatra/server.go)
 
 ### Rust
-TODO
+Using Actix: [examples/full/rust-actix/server.go](examples/full/rust-actix/server.go)
 
 ### PHP
-TODO
+Using Mark: [examples/full/php-mark/server.go](examples/full/php-mark/server.go)
+
+### Balerina
+Using built-in tools [examples/full/balerina/server.go](examples/full/balerina/server.go)
+
+### Deno
+Using Oak: [examples/full/deno-oak/server.go](examples/full/deno-oak/server.go)
+
+### Swift
+Using Perfect: [examples/full/swift-perfect/server.go](examples/full/swift-perfect/server.go)
 
 ### C#
 TODO
 
 ### C++
+TODO
+
+### Kotlin
 TODO
 
 ### Delphi
