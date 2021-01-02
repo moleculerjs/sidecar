@@ -24,6 +24,18 @@ services:
       - external
     restart: always
 
+  ballerina-demo:
+    image: sidecar-demo-ballerina
+    build:
+      context: ./ballerina
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
+
   deno-demo:
     image: sidecar-demo-deno
     build:
