@@ -120,6 +120,18 @@ services:
       - internal
     restart: always
 
+  crystal-demo:
+    image: sidecar-demo-crystal
+    build:
+      context: ./crystal-kemal
+    environment:
+      SIDECAR_ADDRESS: http://sidecar:5103
+    depends_on:
+      - sidecar
+    networks:
+      - internal
+    restart: always
+
 networks:
   internal: {}
   external: {}

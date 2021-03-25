@@ -3,6 +3,7 @@
 This example demonstrates the Moleculer Sidecar polyglot microservices functionality. It starts a Sidecar container and external service containers:
 
 - **Ballerina**: v1.2.12
+- **Crystal**: v1.0.0
 - **Deno**: Oak v6.4.1
 - **Go**: Fiber v2.3.0
 - **PHP**: Mark v1.1
@@ -27,6 +28,9 @@ mol $ actions -i
 ╟────────────────────────┼───────┼──────────┼────────┼────────╢
 ║ ballerina-demo.hello   │     1 │    OK    │   No   │        ║
 ║ ballerina-demo.welcome │     1 │    OK    │   No   │ name   ║
+╟────────────────────────┼───────┼──────────┼────────┼────────╢
+║ crystal-demo.hello     │     1 │    OK    │   No   │        ║
+║ crystal-demo.welcome   │     1 │    OK    │   No   │ name   ║
 ╟────────────────────────┼───────┼──────────┼────────┼────────╢
 ║ deno-demo.hello        │     1 │    OK    │   No   │        ║
 ║ deno-demo.welcome      │     1 │    OK    │   No   │ name   ║

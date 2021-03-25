@@ -345,6 +345,9 @@ Using Oak: [examples/full/deno-oak/server.ts](examples/full/deno-oak/server.ts)
 ### Swift
 Using Perfect: [examples/full/swift-perfect/Sources/server/main.swift](examples/full/swift-perfect/Sources/server/main.swift)
 
+### Crystal
+Using kemal: [examples/full/crystal-kemal/server.cr](examples/full/crystal-kemal/server.cr)
+
 ### C#
 TODO
 
@@ -364,6 +367,6 @@ Please send pull requests improving the usage and fixing bugs, improving documen
 The project is available under the [MIT license](https://tldrlegal.com/license/mit-license).
 
 ## Contact
-Copyright (c) 2020 MoleculerJS
+Copyright (c) 2021 MoleculerJS
 
 [![@MoleculerJS](https://img.shields.io/badge/github-moleculerjs-green.svg)](https://github.com/moleculerjs) [![@MoleculerJS](https://img.shields.io/badge/twitter-MoleculerJS-blue.svg)](https://twitter.com/MoleculerJS)
